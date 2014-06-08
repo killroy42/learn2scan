@@ -53,6 +53,7 @@
 				hitTarget: 'hitTarget',
 			};
 			var state;
+			var hits = [];
 			var heatMap = {
 				w: 0,
 				h: 0,
@@ -90,6 +91,27 @@
 				return html;
 			}
 			
+			function recordHit(x, y) {
+				var stopTimer = Date.now();
+				for(var i = 0; i<100; i++)
+				hits.push({
+					x: x,
+					y: y,
+					t: stopTimer-timer
+				});
+				console.log('hits count:', hits.length);
+				console.log('hits JSON length:', JSON.stringify(hits).length);
+				/*
+				var stopTimer = Date.now();
+				var heatX = Math.floor(target.x / HEAT_RES);
+				var heatY = Math.floor(target.y / HEAT_RES);
+				console.log(stopTimer-timer, 'at' , target.x, target.y, 'h', heatX, heatY);
+				heatMap.data[heatX][heatY].time += stopTimer-timer;
+				heatMap.data[heatX][heatY].cnt++;
+				$('#heatmap').html(drawHeatmap());
+				*/
+			}
+			
 			function run(newState) {
 				if(newState) state = newState;
 				switch(state) {
@@ -100,13 +122,7 @@
 					case states.showTarget:
 						break;
 					case states.hitTarget:
-						var stopTimer = Date.now();
-						var heatX = Math.floor(target.x / HEAT_RES);
-						var heatY = Math.floor(target.y / HEAT_RES);
-						console.log(stopTimer-timer, 'at' , target.x, target.y, 'h', heatX, heatY);
-						heatMap.data[heatX][heatY].time += stopTimer-timer;
-						heatMap.data[heatX][heatY].cnt++;
-						$('#heatmap').html(drawHeatmap());
+						recordHit(target.x, target.y)
 						run(states.moveTarget)
 						break;
 				}
@@ -116,6 +132,7 @@
 				lab = $('#lab');
 				target = $('#target');
 				$('#target svg .hotspot')[0].onclick = hitTarget;
+				/*
 				heatMap.w = Math.floor(lab.width() / HEAT_RES)+1;
 				heatMap.h = Math.floor(lab.height() / HEAT_RES)+1;
 				for(var x = 0; x < heatMap.w; x++) {
@@ -123,6 +140,8 @@
 					for(var y = 0; y < heatMap.h; y++)
 						heatMap.data[x][y] = { time: 0, cnt: 0 };
 				}
+				*/
+				hits = [];
 				run(states.moveTarget);
 			});
 		</script>

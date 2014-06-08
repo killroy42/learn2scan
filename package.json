@@ -1,0 +1,26 @@
+{
+  "name": "learn2scan",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Sven Neumann",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "async": "*",
+    "body-parser": "*",
+    "express": "*"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
+  "subdomain": "l2s",
+  "engines": {
+    "node": "0.10.x"
+  }
+}

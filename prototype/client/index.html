@@ -78,11 +78,11 @@
 				};
 				
 				$.ajax({
-					type: "POST",
+					type: 'POST',
 					url: SERVER_URL,
-					data: session,
+					data: JSON.stringify(session),
 					//success: success,
-					dataType: 'application/json'
+					dataType: 'json'
 				});
 				
 				hits = [];
